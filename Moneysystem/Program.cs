@@ -6,7 +6,7 @@ namespace Moneysystem
     {
         static void Main(string[] args)
         {
-
+            Console.WriteLine("Test");
         }
     }
 }
