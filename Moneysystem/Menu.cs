@@ -1,6 +1,5 @@
 using System;
 
-
 namespace Moneysystem
 {
     public static class Menu
@@ -22,9 +21,9 @@ namespace Moneysystem
 
                 switch (Convert.ToInt32(input))
                 {
-                    case 1:
+                    case 1: // Login
                         break;
-                    case 2:
+                    case 2: // Exit program
                         exit = true;
                         break;
                     default:
@@ -53,14 +52,14 @@ namespace Moneysystem
                 var input = Console.ReadLine();
                 switch (Convert.ToInt32(input))
                 {
-                    case 1:
+                    case 1: // access user.salary
                         break;
-                    case 2:
+                    case 2: // access user.role
                         break;
-                    case 3:
+                    case 3: // remove account and log out
                         exit = true;
                         break;
-                    case 4:
+                    case 4: // log out
                         exit = true;
                         break;
                     default:
@@ -68,10 +67,46 @@ namespace Moneysystem
                         break;
                 }
             }
-
-
         }
-
-
+        /// <summary>
+        /// Prompts the user for commands from the admin menu
+        /// </summary>
+        public static void AdminMenu()
+        {
+            bool exit = false;
+            Console.Clear();
+            while (!exit)
+            {
+                Console.WriteLine("Welcome to the Admin menu.");
+                Console.WriteLine("Please select an option:");
+                Console.WriteLine("1 - See your current salary");
+                Console.WriteLine("2 - See your role in the company");
+                Console.WriteLine("3 - Create an user");
+                Console.WriteLine("4 - Remove an user");
+                Console.WriteLine("5 - List all users and passwords");
+                Console.WriteLine("6 - Log out and return to the main menu");
+                Console.Write(">  ");
+                var input = Console.ReadLine();
+                switch (Convert.ToInt32(input))
+                {
+                    case 1: // access user.salary
+                        break;
+                    case 2: // access user.role
+                        break;
+                    case 3: // create a user
+                        break;
+                    case 4: // remove an user
+                        break;
+                    case 5: // list all users and passwords
+                        break;
+                    case 6: // log out
+                        exit = true;
+                        break;
+                    default:
+                        Console.WriteLine("Invalid input. Please try again.");
+                        break;
+                }
+            }
+        }
     }
 }

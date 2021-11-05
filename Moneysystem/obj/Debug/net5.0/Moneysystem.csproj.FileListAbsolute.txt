@@ -1,0 +1,16 @@
+C:\Users\GWU\Documents\GitHub\Moneysystem\Moneysystem\bin\Debug\net5.0\Moneysystem.exe
+C:\Users\GWU\Documents\GitHub\Moneysystem\Moneysystem\bin\Debug\net5.0\Moneysystem.deps.json
+C:\Users\GWU\Documents\GitHub\Moneysystem\Moneysystem\bin\Debug\net5.0\Moneysystem.runtimeconfig.json
+C:\Users\GWU\Documents\GitHub\Moneysystem\Moneysystem\bin\Debug\net5.0\Moneysystem.runtimeconfig.dev.json
+C:\Users\GWU\Documents\GitHub\Moneysystem\Moneysystem\bin\Debug\net5.0\Moneysystem.dll
+C:\Users\GWU\Documents\GitHub\Moneysystem\Moneysystem\bin\Debug\net5.0\ref\Moneysystem.dll
+C:\Users\GWU\Documents\GitHub\Moneysystem\Moneysystem\bin\Debug\net5.0\Moneysystem.pdb
+C:\Users\GWU\Documents\GitHub\Moneysystem\Moneysystem\obj\Debug\net5.0\Moneysystem.csproj.AssemblyReference.cache
+C:\Users\GWU\Documents\GitHub\Moneysystem\Moneysystem\obj\Debug\net5.0\Moneysystem.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\GWU\Documents\GitHub\Moneysystem\Moneysystem\obj\Debug\net5.0\Moneysystem.AssemblyInfoInputs.cache
+C:\Users\GWU\Documents\GitHub\Moneysystem\Moneysystem\obj\Debug\net5.0\Moneysystem.AssemblyInfo.cs
+C:\Users\GWU\Documents\GitHub\Moneysystem\Moneysystem\obj\Debug\net5.0\Moneysystem.csproj.CoreCompileInputs.cache
+C:\Users\GWU\Documents\GitHub\Moneysystem\Moneysystem\obj\Debug\net5.0\Moneysystem.dll
+C:\Users\GWU\Documents\GitHub\Moneysystem\Moneysystem\obj\Debug\net5.0\ref\Moneysystem.dll
+C:\Users\GWU\Documents\GitHub\Moneysystem\Moneysystem\obj\Debug\net5.0\Moneysystem.pdb
+C:\Users\GWU\Documents\GitHub\Moneysystem\Moneysystem\obj\Debug\net5.0\Moneysystem.genruntimeconfig.cache
