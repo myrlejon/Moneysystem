@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2021-11-09T13:46:00.544Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36" etag="G69TLVNpbS-dMwN-vSGz" version="15.6.8" type="github">
+<mxfile host="app.diagrams.net" modified="2021-11-09T13:46:18.809Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36" etag="oyI-RkVrxHLpOGhj1Mb9" version="15.6.8" type="github">
   <diagram id="zP3AriLeZ0x4zKPp6E03" name="Page-1">
     <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -55,6 +55,9 @@
         </mxCell>
         <mxCell id="96BlOOsoumWJtGjEGC4U-14" value="Pusha rättelser" style="whiteSpace=wrap;html=1;rounded=1;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" vertex="1" parent="1">
           <mxGeometry x="590" y="420" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="96BlOOsoumWJtGjEGC4U-15" value="Merga koden" style="whiteSpace=wrap;html=1;rounded=1;fillColor=#008a00;strokeColor=#005700;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="390" y="650" width="120" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
