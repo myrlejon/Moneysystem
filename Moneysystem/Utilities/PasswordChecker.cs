@@ -7,7 +7,7 @@ namespace Moneysystem.Utilities
         /// </summary>
         /// <param name="password">The password to check</param>
         /// <returns>True if the password is ok, false if not</returns>
-        public bool CheckPassword(string password)
+        public static bool CheckPassword(string password)
         {
             bool containsNumber = false, containsLetter = false;
             foreach (char c in password)
