@@ -10,8 +10,8 @@ using Moneysystem.Database;
 namespace Moneysystem.Migrations
 {
     [DbContext(typeof(Database.Database))]
-    [Migration("20211111131048_Moneysytem")]
-    partial class Moneysytem
+    [Migration("20211111143209_Moneysystem")]
+    partial class Moneysystem
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -39,6 +39,12 @@ namespace Moneysystem.Migrations
 
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Salary")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("SessionTimer")
                         .HasColumnType("datetime2");

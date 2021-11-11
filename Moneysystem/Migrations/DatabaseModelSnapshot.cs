@@ -38,6 +38,12 @@ namespace Moneysystem.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Role")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Salary")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("SessionTimer")
                         .HasColumnType("datetime2");
 
