@@ -16,5 +16,7 @@ namespace Moneysystem.Models
         public DateTime SessionTimer { get; set; } = DateTime.Now;
         public bool IsActive { get; set; } = true;
         public bool IsAdmin { get; set; } = false;
+        public int Salary { get; set; }
+        public string Role { get; set; }
     }
 }

@@ -18,8 +18,8 @@ namespace Moneysystem.Database
                 {
                     db.Users.AddRange(new List<Users>
                     {
-                       new Users {Name = "admin1", Password = "admin1234", IsAdmin = true },
-                       new Users {Name = "user1", Password = "user1234", IsAdmin = false }
+                       new Users {Name = "admin1", Password = "admin1234", IsAdmin = true , Salary = 500, Role = "Administrator"},
+                       new Users {Name = "user1", Password = "user1234", IsAdmin = false , Salary = 100, Role = "User"}
                     });
                     db.SaveChanges();
                 }
