@@ -5,8 +5,8 @@ namespace Moneysystem
     {
         static void Main(string[] args)
         {
+            Database.Seeder.Seed();
             Menu.MainMenu();
-
         }
     }
 }
