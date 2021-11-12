@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.31424.327
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moneysystem", "Moneysystem\Moneysystem.csproj", "{CF948519-3223-4FE7-8EB7-FB44D67642C2}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Moneysystem", "Moneysystem", "{FDC99470-C76C-450A-8661-A6D7B7366652}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSuite", "Moneysystem\TestSuite\TestSuite.csproj", "{E697C242-86DA-4C2D-A234-19955D557C70}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,11 +19,18 @@ Global
 		{CF948519-3223-4FE7-8EB7-FB44D67642C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF948519-3223-4FE7-8EB7-FB44D67642C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF948519-3223-4FE7-8EB7-FB44D67642C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E697C242-86DA-4C2D-A234-19955D557C70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E697C242-86DA-4C2D-A234-19955D557C70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E697C242-86DA-4C2D-A234-19955D557C70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E697C242-86DA-4C2D-A234-19955D557C70}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2F40632C-F5EC-4D55-B6D1-449A01E98A8A}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E697C242-86DA-4C2D-A234-19955D557C70} = {FDC99470-C76C-450A-8661-A6D7B7366652}
 	EndGlobalSection
 EndGlobal
