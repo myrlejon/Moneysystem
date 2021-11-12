@@ -19,6 +19,6 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore \Moneysystem\
       - name: Build
-        run: dotnet build .\Moneysystem\ --no-restore
+        run: dotnet build \Moneysystem\ --no-restore
       - name: Test
         run: dotnet test .\Moneysystem\ --no-build --verbosity normal
