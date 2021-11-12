@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Moneysystem.csproj" />
+    <ProjectReference Include="Moneysystem\Moneysystem.csproj" />
   </ItemGroup>
 
 </Project>
