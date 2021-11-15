@@ -16,10 +16,10 @@ namespace Moneysystem.Database
             {
                 if (db.Users.Count() == 0)
                 {
-                    db.Users.AddRange(new List<Users>
+                    db.Users.AddRange(new List<Account>
                     {
-                       new Users {Name = "admin1", Password = "admin1234", IsAdmin = true , Salary = 500, Role = "Administrator"},
-                       new Users {Name = "user1", Password = "user1234", IsAdmin = false , Salary = 100, Role = "User"}
+                       new Account {Name = "admin1", Password = "admin1234", IsAdmin = true , Salary = 500, Role = "Administrator"},
+                       new Account {Name = "user1", Password = "user1234", IsAdmin = false , Salary = 100, Role = "User"}
                     });
                     db.SaveChanges();
                 }
