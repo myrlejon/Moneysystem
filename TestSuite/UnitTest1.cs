@@ -1,4 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace TestSuite
 {
@@ -6,8 +7,9 @@ namespace TestSuite
     public class UnitTest1
     {
         [TestMethod]
-        public void TestMethod1()
+        public void TestPassword()
         {
+            Assert.IsTrue(Moneysystem.Utilities.PasswordChecker.CheckPassword("t123abdkq"));
         }
     }
 }
