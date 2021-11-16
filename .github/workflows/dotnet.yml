@@ -21,4 +21,4 @@ jobs:
       - name: Build
         run: dotnet build --no-restore \Moneysystem\
       - name: Test
-        run: dotnet test --no-build --verbosity normal \Moneysystem\
+        run: dotnet test --no-build --verbosity normal \TestSuite\
