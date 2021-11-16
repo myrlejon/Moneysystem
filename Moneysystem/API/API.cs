@@ -17,7 +17,7 @@ namespace Moneysystem.API
                 var user = db.Users.FirstOrDefault(u => u.Name == username);
                 if (user == null && String.IsNullOrEmpty(password) == true)
                 {
-                    db.Users.Add(new User
+                    db.Users.Add(new Models.User
                     {
                         Name = username
                     });
@@ -26,7 +26,7 @@ namespace Moneysystem.API
                 }
                 else if (user == null && password == passwordVerify)
                 {
-                    db.Users.Add(new User
+                    db.Users.Add(new Models.User
                     {
                         Name = username,
                         Password = password,
