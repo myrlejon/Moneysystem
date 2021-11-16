@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "gIUWXQEv7s0Y5eAo6uT+n6l9Tyv64eBeZRnuqLuYJ2bL9cJyiG/AoVoARqpMS0z60EQuFHJe2amUU0DaWUVHcg==",
+  "dgSpecHash": "AQ6rAN61rMaLqmPEAv6FOPNHGwV0MKMlwsrv3K7JCJdWfb9hDiQZknPdx8omkTf2JaRE9oW+0Tkc3naFcacGqQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\GWU\\Documents\\GitHub\\Moneysystem\\Moneysystem\\TestSuite\\TestSuite.csproj",
+  "projectFilePath": "C:\\Users\\GWU\\Documents\\GitHub\\Moneysystem\\TestSuite\\TestSuite.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\GWU\\.nuget\\packages\\coverlet.collector\\3.0.2\\coverlet.collector.3.0.2.nupkg.sha512",
     "C:\\Users\\GWU\\.nuget\\packages\\microsoft.codecoverage\\16.9.4\\microsoft.codecoverage.16.9.4.nupkg.sha512",

@@ -1,7 +1,7 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\GWU\\Documents\\GitHub\\Moneysystem\\Moneysystem\\TestSuite\\TestSuite.csproj": {}
+    "C:\\Users\\GWU\\Documents\\GitHub\\Moneysystem\\TestSuite\\TestSuite.csproj": {}
   },
   "projects": {
     "C:\\Users\\GWU\\Documents\\GitHub\\Moneysystem\\Moneysystem\\Moneysystem.csproj": {
@@ -83,14 +83,14 @@
         }
       }
     },
-    "C:\\Users\\GWU\\Documents\\GitHub\\Moneysystem\\Moneysystem\\TestSuite\\TestSuite.csproj": {
+    "C:\\Users\\GWU\\Documents\\GitHub\\Moneysystem\\TestSuite\\TestSuite.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\GWU\\Documents\\GitHub\\Moneysystem\\Moneysystem\\TestSuite\\TestSuite.csproj",
+        "projectUniqueName": "C:\\Users\\GWU\\Documents\\GitHub\\Moneysystem\\TestSuite\\TestSuite.csproj",
         "projectName": "TestSuite",
-        "projectPath": "C:\\Users\\GWU\\Documents\\GitHub\\Moneysystem\\Moneysystem\\TestSuite\\TestSuite.csproj",
+        "projectPath": "C:\\Users\\GWU\\Documents\\GitHub\\Moneysystem\\TestSuite\\TestSuite.csproj",
         "packagesPath": "C:\\Users\\GWU\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\GWU\\Documents\\GitHub\\Moneysystem\\Moneysystem\\TestSuite\\obj\\",
+        "outputPath": "C:\\Users\\GWU\\Documents\\GitHub\\Moneysystem\\TestSuite\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
