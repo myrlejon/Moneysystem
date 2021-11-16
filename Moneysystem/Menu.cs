@@ -4,6 +4,7 @@ namespace Moneysystem
 {
     public static class Menu
     {
+        // User currentUser = new();
         /// <summary>
         /// Creates a basic main menu that lets the user log in, or exit the program.
         /// </summary>
@@ -22,6 +23,9 @@ namespace Moneysystem
                 switch (Convert.ToInt32(input))
                 {
                     case 1: // Login
+                            // Login returnerar user
+                            // currentUser = GetUser(Login());
+                            // isAdmin check
                         break;
                     case 2: // Exit program
                         exit = true;
@@ -57,6 +61,8 @@ namespace Moneysystem
                     case 2: // access user.role
                         break;
                     case 3: // remove account and log out
+                            // logout(currentUser.Id);
+                            // currentUser = new User();
                         exit = true;
                         break;
                     case 4: // log out
