@@ -59,6 +59,15 @@ namespace Moneysystem.API
             return ID;
         }
 
+        public Models.Account GetUser(int ID)
+        {
+            using(var db = new Database.Database())
+            {
+                var user = db.Users.FirstOrDefault(u => u.ID == ID);
+                return user;
+            }
+        }
+
         /// <summary>
         /// Logs out the user and resets their session timer.
         /// </summary>

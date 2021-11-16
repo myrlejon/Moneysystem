@@ -1,10 +1,11 @@
 using System;
-
+using System.Collections.Generic;
 namespace Moneysystem
 {
     public static class Menu
     {
-        // User currentUser = new();
+        static Models.Account currentUser = new();
+        static API.API api = new();
         /// <summary>
         /// Creates a basic main menu that lets the user log in, or exit the program.
         /// </summary>
@@ -23,9 +24,29 @@ namespace Moneysystem
                 switch (Convert.ToInt32(input))
                 {
                     case 1: // Login
-                            // Login returnerar user
-                            // currentUser = GetUser(Login());
-                            // isAdmin check
+                            Console.WriteLine("Username: ");
+                            var userInput = Console.ReadLine();
+                            Console.WriteLine("Password: ");
+                            var passInput = Console.ReadLine();
+
+                            currentUser = api.GetUser(api.Login(userInput, passInput));
+
+                            if (currentUser is null)
+                            {
+                                Console.WriteLine("Wrong input.");
+                                break;
+                            }
+                            else
+                            {
+                                if (currentUser.IsAdmin)
+                                {   
+                                    AdminMenu();
+                                }
+                                else if (currentUser.IsAdmin != true)
+                                {
+                                    UserMenu();
+                                }
+                            }
                         break;
                     case 2: // Exit program
                         exit = true;
