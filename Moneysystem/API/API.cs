@@ -131,5 +131,66 @@ namespace Moneysystem.API
                 return userDelete;
             }
          }
+
+        /// <summary>
+        /// Admin kan inte ta bort sig själv.
+        /// </summary>
+         public bool RemoveUserAdmin(int adminID, int ID)
+         {
+            using (var db = new Database.Database())
+            {
+                bool userDelete = false;
+                var user = db.Users.FirstOrDefault(u => u.ID == ID);
+                var admin = db.Users.FirstOrDefault(u => u.ID == adminID);
+
+                if (user != null && user.ID != admin.ID)
+                {
+                    userDelete = true;
+                    db.Users.Remove(user);
+                    db.SaveChanges();
+                }
+                return userDelete;
+            }
+         }
+
+
+
+         public bool CreateUser(string username, string password, string passwordVerify, int salary, string role)
+        {
+            using (var db = new Database.Database())
+            {
+                bool create = false;
+                var user = db.Users.FirstOrDefault(u => u.Name == username);
+
+                if (user == null && password == passwordVerify)
+                {
+                    db.Users.Add(new Models.User
+                    {
+                        Name = username,
+                        Password = password,
+                        Salary = salary,
+                        Role = role
+                    });
+                    db.SaveChanges();
+                    create = true;
+                }
+                return create;
+            }
+        }
+
+        public List<Models.Account> ListAllUsers()
+        {
+            List<Models.Account> users = new();
+            using (var db = new Database.Database())
+            {
+                foreach (Models.Account user in db.Users)
+                {
+                    users.Add(user);
+                }
+            }
+            return users;
+        }
+
+
     }
 }

@@ -78,15 +78,19 @@ namespace Moneysystem
                 switch (Convert.ToInt32(input))
                 {
                     case 1: // access user.salary
+                    //api.ViewSalary()
                         break;
                     case 2: // access user.role
+                    //api.ViewRole();
                         break;
                     case 3: // remove account and log out
-                            // logout(currentUser.Id);
-                            // currentUser = new User();
+                    // api.RemoveUser
+                    // api.Logout(currentUser.Id);
+                    // currentUser = new User();
                         exit = true;
                         break;
                     case 4: // log out
+                        //api.Logout    
                         exit = true;
                         break;
                     default:
@@ -117,14 +121,40 @@ namespace Moneysystem
                 switch (Convert.ToInt32(input))
                 {
                     case 1: // access user.salary
+                        //api.ViewSalary() alternativt api.GetUser();
                         break;
                     case 2: // access user.role
+                        //api.ViewRole(); alternativt api.GetUser();
                         break;
                     case 3: // create a user
+                        //api.CreateUser();
                         break;
                     case 4: // remove an user
+                        bool remove = false;
+                        Console.WriteLine("Enter the ID of the user you want to delete.");
+                        var removeInput = Console.ReadLine();
+                        int intInput = Convert.ToInt32(removeInput);
+                        remove = api.RemoveUserAdmin(currentUser.ID, intInput);
+                        if (remove)
+                        {
+                            Console.WriteLine("Succesfully removed user.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Failed to remove user.");
+                        }
+                        Console.WriteLine("Press any key to proceed...");
+                        Console.ReadLine();
                         break;
                     case 5: // list all users and passwords
+                        List<Models.Account> list = new();
+                        list = api.ListAllUsers();
+                        foreach(var user in list)
+                        {
+                            System.Console.WriteLine($"ID: {user.ID} Username: {user.Name} Password: {user.Password}");
+                        }
+                        Console.WriteLine("Press any key to proceed...");
+                        Console.ReadLine();
                         break;
                     case 6: // log out
                         exit = true;
