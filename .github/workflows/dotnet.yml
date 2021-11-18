@@ -18,7 +18,7 @@ jobs:
           dotnet-version: 5.0.x
       - name: Restore dependencies
         run: dotnet restore \Moneysystem\
-        run: dotnet restore \TestSuite\
+        # run: dotnet restore \TestSuite\
       - name: Build
         run: dotnet build --no-restore \Moneysystem\
         run: dotnet build --no-restore \TestSuite\
