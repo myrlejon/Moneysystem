@@ -21,6 +21,11 @@ jobs:
         
       - name: Build
         run: dotnet build --no-restore \Moneysystem\
+      - name: Install Entity Framework Core tools
+        run: dotnet tool install --global dotnet-ef
+      - name: Migrate
+        run: dotnet-ef database update
+  
         
   
   test:
