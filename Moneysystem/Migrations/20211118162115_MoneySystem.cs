@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Moneysystem.Migrations
 {
-    public partial class Moneysystem : Migration
+    public partial class MoneySystem : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

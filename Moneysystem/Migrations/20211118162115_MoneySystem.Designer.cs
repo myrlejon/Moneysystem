@@ -10,8 +10,8 @@ using Moneysystem.Database;
 namespace Moneysystem.Migrations
 {
     [DbContext(typeof(Database.Database))]
-    [Migration("20211111143209_Moneysystem")]
-    partial class Moneysystem
+    [Migration("20211118162115_MoneySystem")]
+    partial class MoneySystem
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,7 +21,7 @@ namespace Moneysystem.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.0");
 
-            modelBuilder.Entity("Moneysystem.Models.Users", b =>
+            modelBuilder.Entity("Moneysystem.Models.Account", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()

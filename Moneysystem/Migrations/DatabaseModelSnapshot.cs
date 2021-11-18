@@ -19,7 +19,7 @@ namespace Moneysystem.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.0");
 
-            modelBuilder.Entity("Moneysystem.Models.Users", b =>
+            modelBuilder.Entity("Moneysystem.Models.Account", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()

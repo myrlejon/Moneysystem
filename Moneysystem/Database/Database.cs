@@ -14,8 +14,8 @@ namespace Moneysystem.Database
         public DbSet<Account> Users { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer($@"Server=DESKTOP-NJ9EFR0;Database={DatabaseName}; trusted_connection = true;");
-            //optionsBuilder.UseSqlServer($@"Server=.\SQLExpress;Database={DatabaseName}; Trusted_Connection = true;");
+            // optionsBuilder.UseSqlServer($@"Server=DESKTOP-NJ9EFR0;Database={DatabaseName}; trusted_connection = true;");
+            optionsBuilder.UseSqlServer($@"Server=.\SQLExpress;Database={DatabaseName}; Trusted_Connection = true;");
         }
     }
 }
