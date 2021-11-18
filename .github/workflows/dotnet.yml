@@ -25,6 +25,7 @@ jobs:
         run: dotnet tool install --global dotnet-ef
       - name: Migrate
         run: |
+          cd \Moneysystem\
           dotnet-ef migrations add Moneysystem
           dotnet-ef database update
   
