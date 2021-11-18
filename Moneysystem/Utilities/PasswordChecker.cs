@@ -9,6 +9,10 @@ namespace Moneysystem.Utilities
         /// <returns>True if the password is ok, false if not</returns>
         public static bool CheckPassword(string password)
         {
+            if (password is null)
+            {
+                return false;
+            }
             bool containsNumber = false, containsLetter = false;
             foreach (char c in password)
             {
