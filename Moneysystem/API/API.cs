@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Moneysystem.Utilities;
 
 namespace Moneysystem.API
 {
@@ -9,27 +10,28 @@ namespace Moneysystem.API
         /// <summary>
         /// Registers a new user if username isn't not taken.
         /// </summary>
-        public bool Register(string username, string password, string passwordVerify) // TODO: Lägga till obligatorisk salary och role vid registrering?
+        public bool Register(string username, string password, string passwordVerify,
+        string role) // TODO: Lägga till obligatorisk salary och role vid registrering?
         {
+            bool create = false;
+            if (!PasswordChecker.CheckPassword(password)
+                || !PasswordChecker.CheckPassword(passwordVerify)
+                || !password.Equals(passwordVerify)
+                || !Roles.ValidateRole(role))
+            {
+                return create;
+            }
             using (var db = new Database.Database())
             {
-                bool create = false;
                 var user = db.Users.FirstOrDefault(u => u.Name == username);
-                if (user == null && String.IsNullOrEmpty(password) == true)
-                {
-                    db.Users.Add(new Models.User
-                    {
-                        Name = username
-                    });
-                    db.SaveChanges();
-                    create = true;
-                }
-                else if (user == null && password == passwordVerify)
+                if (user == null)
                 {
                     db.Users.Add(new Models.User
                     {
                         Name = username,
                         Password = password,
+                        Role = role,
+                        Salary = Roles.SetBasicSalary(role)
                     });
                     db.SaveChanges();
                     create = true;
@@ -61,9 +63,18 @@ namespace Moneysystem.API
 
         public Models.Account GetUser(int ID)
         {
-            using(var db = new Database.Database())
+            using (var db = new Database.Database())
             {
                 var user = db.Users.FirstOrDefault(u => u.ID == ID);
+                return user;
+            }
+        }
+
+        public Models.Account GetUser(string username)
+        {
+            using (var db = new Database.Database())
+            {
+                var user = db.Users.FirstOrDefault(u => u.Name == username);
                 return user;
             }
         }
@@ -95,28 +106,28 @@ namespace Moneysystem.API
                 var user = db.Users.FirstOrDefault(u => u.ID == ID);
                 if (user != null)
                 {
-                     salary = user.Salary;
+                    salary = user.Salary;
                 }
                 return salary;
             }
-         }
+        }
 
-         public string ViewRole(int ID)
-         {
+        public string ViewRole(int ID)
+        {
             using (var db = new Database.Database())
             {
                 string role = "";
                 var user = db.Users.FirstOrDefault(u => u.ID == ID);
                 if (user != null)
                 {
-                     role = user.Role;
+                    role = user.Role;
                 }
                 return role;
             }
-         }
+        }
 
-         public bool RemoveUser(int ID, string username, string password)
-         {
+        public bool RemoveUser(int ID, string username, string password)
+        {
             using (var db = new Database.Database())
             {
                 bool userDelete = false;
@@ -130,13 +141,13 @@ namespace Moneysystem.API
                 }
                 return userDelete;
             }
-         }
+        }
 
         /// <summary>
         /// Admin kan inte ta bort sig själv.
         /// </summary>
-         public bool RemoveUserAdmin(int adminID, int ID)
-         {
+        public bool RemoveUserAdmin(int adminID, int ID)
+        {
             using (var db = new Database.Database())
             {
                 bool userDelete = false;
@@ -151,18 +162,23 @@ namespace Moneysystem.API
                 }
                 return userDelete;
             }
-         }
+        }
 
-
-
-         public bool CreateUser(string username, string password, string passwordVerify, int salary, string role)
+        public bool CreateUser(string username, string password, string passwordVerify, int salary, string role)
         {
+            bool create = false;
+            if (!PasswordChecker.CheckPassword(password)
+                || !PasswordChecker.CheckPassword(passwordVerify)
+                || !password.Equals(passwordVerify)
+                || !Roles.ValidateRole(role))
+            {
+                return create;
+            }
             using (var db = new Database.Database())
             {
-                bool create = false;
                 var user = db.Users.FirstOrDefault(u => u.Name == username);
 
-                if (user == null && password == passwordVerify)
+                if (user == null)
                 {
                     db.Users.Add(new Models.User
                     {
@@ -190,7 +206,5 @@ namespace Moneysystem.API
             }
             return users;
         }
-
-
     }
 }

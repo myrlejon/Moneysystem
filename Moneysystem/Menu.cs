@@ -24,29 +24,29 @@ namespace Moneysystem
                 switch (Convert.ToInt32(input))
                 {
                     case 1: // Login
-                            Console.WriteLine("Username: ");
-                            var userInput = Console.ReadLine();
-                            Console.WriteLine("Password: ");
-                            var passInput = Console.ReadLine();
+                        Console.WriteLine("Username: ");
+                        var userInput = Console.ReadLine();
+                        Console.WriteLine("Password: ");
+                        var passInput = Console.ReadLine();
 
-                            currentUser = api.GetUser(api.Login(userInput, passInput));
+                        currentUser = api.GetUser(api.Login(userInput, passInput));
 
-                            if (currentUser is null)
+                        if (currentUser is null)
+                        {
+                            Console.WriteLine("Wrong input.");
+                            break;
+                        }
+                        else
+                        {
+                            if (currentUser.IsAdmin)
                             {
-                                Console.WriteLine("Wrong input.");
-                                break;
+                                AdminMenu();
                             }
                             else
                             {
-                                if (currentUser.IsAdmin)
-                                {   
-                                    AdminMenu();
-                                }
-                                else if (currentUser.IsAdmin != true)
-                                {
-                                    UserMenu();
-                                }
+                                UserMenu();
                             }
+                        }
                         break;
                     case 2: // Exit program
                         exit = true;
@@ -78,15 +78,15 @@ namespace Moneysystem
                 switch (Convert.ToInt32(input))
                 {
                     case 1: // access user.salary
-                    //api.ViewSalary()
+                            //api.ViewSalary()
                         break;
                     case 2: // access user.role
-                    //api.ViewRole();
+                            //api.ViewRole();
                         break;
                     case 3: // remove account and log out
-                    // api.RemoveUser
-                    // api.Logout(currentUser.Id);
-                    // currentUser = new User();
+                            // api.RemoveUser
+                            // api.Logout(currentUser.Id);
+                            // currentUser = new User();
                         exit = true;
                         break;
                     case 4: // log out
@@ -149,7 +149,7 @@ namespace Moneysystem
                     case 5: // list all users and passwords
                         List<Models.Account> list = new();
                         list = api.ListAllUsers();
-                        foreach(var user in list)
+                        foreach (var user in list)
                         {
                             System.Console.WriteLine($"ID: {user.ID} Username: {user.Name} Password: {user.Password}");
                         }
