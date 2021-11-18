@@ -8,9 +8,9 @@ namespace TestSuite
     [TestClass]
     public class UnitTest1
     {
-        [DataRow("")]
-        [DataRow("t123abdkq")]
-        [DataRow("t123abdkq!")]
+        [DataRow("")] // should fail
+        [DataRow("t123abdkq")] // should pass
+        [DataRow("t123abdkq!")] // should fail
         [DataTestMethod]
         public void TestPassword(string value)
         {
