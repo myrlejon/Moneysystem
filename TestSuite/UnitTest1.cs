@@ -119,7 +119,6 @@ namespace TestSuite
             int adminId = api.Login("admin1", "admin1234");
             var user = api.GetUser("snurre2");
             Assert.IsTrue(api.RemoveUserAdmin(adminId, user.ID));
-
         }
     }
 }
