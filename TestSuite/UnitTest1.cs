@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 namespace TestSuite
 {
     [TestClass]
-    public class UnitTest1
+    public class UnitTests
     {
         API api = new API();
 
@@ -65,22 +65,24 @@ namespace TestSuite
             int expected = api.Login(username, password);
             Assert.IsTrue(1 == expected);
         }
-        [TestMethod]
-        public void TestGetUserByID()
+        [DataRow(1)]
+        [DataTestMethod]
+        public void TestGetUserByID(int id)
         {
-            Assert.IsNotNull(api.GetUser(1));
+            Assert.IsNotNull(api.GetUser(id));
         }
-        [TestMethod]
-        public void TestGetUserByName()
+        [DataRow("admin1")]
+        [DataTestMethod]
+        public void TestGetUserByName(string username)
         {
-            Assert.IsNotNull(api.GetUser("admin1"));
+            Assert.IsNotNull(api.GetUser(username));
         }
-
-        [TestMethod]
-        public void TestLogout()
+        [DataRow(1)]
+        [DataTestMethod]
+        public void TestLogout(int userID)
         {
             api.Login("admin1", "admin1234");
-            Assert.IsTrue(api.Logout(1));
+            Assert.IsTrue(api.Logout(userID));
         }
 
         [TestMethod]
