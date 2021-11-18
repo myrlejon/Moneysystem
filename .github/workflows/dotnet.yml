@@ -18,12 +18,13 @@ jobs:
           dotnet-version: 5.0.x
       - name: Restore dependencies
         run: dotnet restore \Moneysystem\
-        # run: dotnet restore \TestSuite\
+        
       - name: Build
         run: dotnet build --no-restore \Moneysystem\
-        run: dotnet build --no-restore \TestSuite\
+        
   
   test:
+    needs: build
     runs-on: ubuntu-latest
 
     steps:
@@ -32,6 +33,10 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 5.0.x
+      - name: Restore dependencies
+        run: dotnet restore \TestSuite\
+      - name: Build
+        run: dotnet build --no-restore \TestSuite\
       - name: Test
         run: dotnet test --no-restore --no-build \TestSuite\
 
