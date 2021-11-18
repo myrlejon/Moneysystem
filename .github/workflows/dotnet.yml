@@ -23,10 +23,9 @@ jobs:
         run: dotnet build --no-restore \Moneysystem\
       - name: Install Entity Framework Core tools
         run: dotnet tool install --global dotnet-ef
-      - name: Migrate
+      - name: Update database
         run: |
           cd \Moneysystem\
-          dotnet-ef migrations add Moneysystem
           dotnet-ef database update
   
         
