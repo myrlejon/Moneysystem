@@ -1,20 +1,20 @@
 namespace Moneysystem.Utilities
 {
-    public static class PasswordChecker
+    public static class UsernameChecker
     {
         /// <summary>
-        /// Checks that the password contains at least one number and a letter
+        /// Checks that the username contains at least one number and a letter and is at least of length 3
         /// </summary>
-        /// <param name="password">The password to check</param>
-        /// <returns>True if the password is ok, false if not</returns>
-        public static bool CheckPassword(string password)
+        /// <param name="username">The username to check</param>
+        /// <returns>True if the username is ok, false if not</returns>
+        public static bool CheckUsername(string username)
         {
-            if (string.IsNullOrEmpty(password))
+            if (string.IsNullOrEmpty(username))
             {
                 return false;
             }
             bool containsNumber = false, containsLetter = false;
-            foreach (char c in password)
+            foreach (char c in username)
             {
                 if (!char.IsDigit(c) && !char.IsLetter(c))
                 {

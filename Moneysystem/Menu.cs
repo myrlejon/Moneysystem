@@ -159,13 +159,13 @@ namespace Moneysystem
                         Console.ReadLine();
                         break;
                     case "3": // create a user 
-                        //TODO: Denna metoden görs om sen med passwordchecks osv, gjorde den temporärt för att testa att den fungerar.
                         Console.WriteLine("Please enter a username:");
                         Console.Write("> ");
                         string username = Console.ReadLine();
                         if(string.IsNullOrEmpty(username) || username.Length < 3)
                         {
-                            Console.WriteLine("\nPlease enter a username with at least 3 characters");
+                            Console.WriteLine("\nPlease enter a username with at least 3 characters"+
+                            " containing at least 1 letter and 1 number");
                             Console.ReadLine();
                             break;
                         }
@@ -200,25 +200,27 @@ namespace Moneysystem
                         Console.ReadLine();
                         break;
                     case "4": // remove an user
-                        bool remove = false;
-                        Console.WriteLine("Enter the ID of the user you want to delete.");
-                        string removeInput = Console.ReadLine();
-                        int removeInt = 0;
-                        if(!Int32.TryParse(removeInput, out removeInt))
+                        Console.WriteLine("Please enter the username of the user to remove: ");
+                        Console.Write("> ");
+                        string removeUser = Console.ReadLine();
+                        Console.WriteLine("\nPlease enther the password of the user to remove: ");
+                        Console.Write("> ");
+                        string removePassword = Console.ReadLine();
+                        var userToRemove = api.GetUser(removeUser);
+                        if(userToRemove is not null)
                         {
-                            Console.WriteLine("Invalid input. Must be a number. "+
-                            "Press enter to return to menu");
-                            Console.ReadLine();
-                            break;
-                        }
-                        remove = api.RemoveUserAdmin(currentUser.ID, removeInt);
-                        if (remove)
-                        {
-                            Console.WriteLine("Succesfully removed user.");
+                            if(api.RemoveUser(userToRemove.ID, removeUser, removePassword))
+                            {
+                                Console.WriteLine("You removed user " + removeUser);
+                            }
+                            else
+                            {
+                                Console.WriteLine("User " + removeUser + " was not removed");
+                            }
                         }
                         else
                         {
-                            Console.WriteLine("Failed to remove user.");
+                            Console.WriteLine(removeUser + " was an incorrect username. Please try again");
                         }
                         Console.WriteLine("Press any key to proceed...");
                         Console.ReadLine();

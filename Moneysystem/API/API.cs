@@ -169,6 +169,7 @@ namespace Moneysystem.API
             bool create = false;
             if (!PasswordChecker.CheckPassword(password)
                 || !PasswordChecker.CheckPassword(passwordVerify)
+                || !UsernameChecker.CheckUsername(username)
                 || !password.Equals(passwordVerify)
                 || !Roles.ValidateRole(role))
             {
