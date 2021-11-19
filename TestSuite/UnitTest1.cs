@@ -112,7 +112,7 @@ namespace TestSuite
         [TestMethod]
         public void TestCreateUser()
         {
-            Assert.IsTrue(api.CreateUser("snurre2", "snurreBurre5", "snurreBurre5", 10, "Minesweeper"));
+            Assert.IsTrue(api.CreateUser("snurre2", "snurreBurre5", "snurreBurre5", "Minesweeper", 10));
         }
 
         [TestMethod]
