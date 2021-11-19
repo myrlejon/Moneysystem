@@ -209,7 +209,7 @@ namespace Moneysystem
                         var userToRemove = api.GetUser(removeUser);
                         if(userToRemove is not null)
                         {
-                            if(userToRemove.password.Equals(removePassword))
+                            if(userToRemove.Password.Equals(removePassword))
                             {
                                 if(api.RemoveUserAdmin(currentUser.ID, userToRemove.ID))
                                 {
