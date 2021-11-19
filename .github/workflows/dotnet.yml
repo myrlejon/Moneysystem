@@ -23,8 +23,11 @@ jobs:
         run: dotnet build --no-restore \Moneysystem\
       - name: Install Entity Framework Core tools
         run: |
-          dotnet tool install --global dotnet-ef --version 5.0
           cd Moneysystem
+          dotnet tool install --global dotnet-ef --version 5.0
+          dotnet add package Microsoft.EntityFrameworkCore.Design
+      - name: Set up database
+        run: |          
           dotnet-ef migrations add Moneysystem
           dotnet-ef database update
       # - name: Update database
