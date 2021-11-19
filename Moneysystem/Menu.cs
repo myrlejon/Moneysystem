@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Moneysystem.Utilities;
 namespace Moneysystem
 {
     public static class Menu
@@ -124,27 +125,65 @@ namespace Moneysystem
                 {
                     case 1: // access user.salary
                         //api.ViewSalary() alternativt api.GetUser();
-                        Console.WriteLine("Enter the ID of the user you want to get the salary from");
-                        var salaryInput = Console.ReadLine();
-                        int salaryInt = Convert.ToInt32(salaryInput);
-                        string salary = api.ViewRole(salaryInt);
-                        Console.WriteLine(salary);
+                        Console.Write("Salary: " + api.ViewSalary(currentUser.ID));
+                        // Console.WriteLine("Enter the ID of the user you want to get the salary from");
+                        // var salaryInput = Console.ReadLine();
+                        // int salaryInt = Convert.ToInt32(salaryInput);
+                        // string salary = api.ViewRole(salaryInt);
+                        // Console.WriteLine(salary);
                         Console.WriteLine("Press any key to proceed...");
                         Console.ReadLine();
                         break;
                     case 2: // access user.role
                         //api.ViewRole(); alternativt api.GetUser();
-                        Console.WriteLine("Enter the ID of the user you want to get the role from");
-                        var roleInput = Console.ReadLine();
-                        int roleInt = Convert.ToInt32(roleInput);
-                        string role = api.ViewRole(roleInt);
-                        Console.WriteLine(role);
+                        Console.Write("Role: " + api.ViewRole(currentUser.ID));
+                        // Console.WriteLine("Enter the ID of the user you want to get the role from");
+                        // var roleInput = Console.ReadLine();
+                        // int roleInt = Convert.ToInt32(roleInput);
+                        // string role = api.ViewRole(roleInt);
+                        // Console.WriteLine(role);
                         Console.WriteLine("Press any key to proceed...");
                         Console.ReadLine();
                         break;
                     case 3: // create a user 
                         //TODO: Denna metoden görs om sen med passwordchecks osv, gjorde den temporärt för att testa att den fungerar.
-                        //api.CreateUser();
+                        Console.WriteLine("Please enter a username:");
+                        Console.Write("> ");
+                        string username = Console.ReadLine();
+                        if(string.IsNullOrEmpty(username) || username.Length < 3)
+                        {
+                            Console.WriteLine("\nPlease enter a username with at least 3 characters");
+                            Console.ReadLine();
+                            break;
+                        }
+                        Console.WriteLine("Please enter a password:");
+                        Console.Write("> ");
+                        string pwd1 = Console.ReadLine();
+                        Console.WriteLine("\nPlease verify the password:");
+                        Console.Write("> ");
+                        string pwd2 = Console.ReadLine();
+                        Console.WriteLine("Please enter one of the avaiable roles for the user: ");
+                        foreach(var item in Utilities.Roles.ListOfRoles){
+                            Console.Write(item + " ");
+                        }
+                        string userrole = Console.ReadLine();
+                        int usersalary = 0;
+                        Console.WriteLine("Please enter a valid starting salary\n" +
+                        "(or just press enter for basic salary for that role)");
+                        string salaryString = Console.ReadLine();
+                        Int32.TryParse(salaryString, out usersalary);
+                        Console.WriteLine("Attempting to create user " + username);
+                        if (api.CreateUser(username, pwd1, pwd2, userrole, usersalary))
+                        {
+                            Console.WriteLine(username + " was created!");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Sorry. Something went wrong. " +
+                             username + " was not created");
+                        }
+                        Console.WriteLine("Returning to menu ...");
+                        Console.ReadLine();
                         break;
                     case 4: // remove an user
                         bool remove = false;

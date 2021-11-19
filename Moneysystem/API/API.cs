@@ -164,7 +164,7 @@ namespace Moneysystem.API
             }
         }
 
-        public bool CreateUser(string username, string password, string passwordVerify, int salary, string role)
+        public bool CreateUser(string username, string password, string passwordVerify, string role , int salary = 0)
         {
             bool create = false;
             if (!PasswordChecker.CheckPassword(password)
