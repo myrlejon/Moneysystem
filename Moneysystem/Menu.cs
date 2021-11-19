@@ -20,11 +20,11 @@ namespace Moneysystem
                 Console.WriteLine("1 - Log in as an User or Admin");
                 Console.WriteLine("2 - Exit the program");
                 Console.Write(">  ");
-                var input = Console.ReadLine();
+                // var input = Console.ReadLine();
 
-                switch (Convert.ToInt32(input))
+                switch (Console.ReadLine())
                 {
-                    case 1: // Login
+                    case "1": // Login
                         Console.WriteLine("Username: ");
                         var userInput = Console.ReadLine();
                         Console.WriteLine("Password: ");
@@ -49,11 +49,12 @@ namespace Moneysystem
                             }
                         }
                         break;
-                    case 2: // Exit program
+                    case "2": // Exit program
                         exit = true;
                         break;
                     default:
-                        Console.WriteLine("Invalid input. Please try again.");
+                        Console.WriteLine("Invalid input. Please press enter to try again.");
+                        Console.ReadLine();
                         break;
                 }
             }
@@ -75,31 +76,53 @@ namespace Moneysystem
                 Console.WriteLine("3 - Remove your user account");
                 Console.WriteLine("4 - Log out and return to the main menu");
                 Console.Write(">  ");
-                var input = Console.ReadLine();
-                switch (Convert.ToInt32(input))
+
+                switch (Console.ReadLine())
                 {
-                    case 1: // access user.salary
-                        Console.Write("Salary: " + api.ViewSalary(currentUser.ID));
+                    case "1": // access user.salary
+                        Console.WriteLine("Salary: " + api.ViewSalary(currentUser.ID));
                         Console.WriteLine("Press any key to proceed...");
                         Console.ReadLine();
                         break;
-                    case 2: // access user.role
-                        Console.Write("Role: " + api.ViewRole(currentUser.ID));
+                    case "2": // access user.role
+                        Console.WriteLine("Role: " + api.ViewRole(currentUser.ID));
                         Console.WriteLine("Press any key to proceed...");
                         Console.ReadLine();
                         break;
-                    case 3: // remove account and log out
-                        api.RemoveUser(currentUser.ID, currentUser.Name, currentUser.Password);
-                        api.Logout(currentUser.ID);
-                        currentUser = new Models.Account();
-                        exit = true;
+                    case "3": // remove account and log out
+                        Console.WriteLine("To remove your account, please enter your username and your password.");
+                        Console.WriteLine("Username: ");
+                        Console.Write("> ");
+                        string inputName = Console.ReadLine();
+                        Console.WriteLine("Password: ");
+                        Console.Write("> ");
+                        string inputPwd = Console.ReadLine();
+                        if(currentUser.Name.Equals(inputName) &&
+                            inputPwd.Equals(currentUser.Password))
+                        {
+                            api.RemoveUser(currentUser.ID, currentUser.Name, currentUser.Password);
+                            api.Logout(currentUser.ID);
+                            currentUser = new ();
+                            exit = true;
+                            Console.WriteLine("You have removed your account, and are also logged out.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Incorrect username and/or password. Returning to menu");
+                        }
+                        Console.ReadLine();
+                        
                         break;
-                    case 4: // log out
+                    case "4": // log out
                         api.Logout(currentUser.ID); 
+                        currentUser = new();
+                        Console.WriteLine("You have logged out.");
+                        Console.ReadLine();
                         exit = true;
                         break;
                     default:
-                        Console.WriteLine("Invalid input. Please try again.");
+                        Console.WriteLine("Invalid input. Press enter to try again.");
+                        Console.ReadLine();
                         break;
                 }
             }
@@ -122,32 +145,20 @@ namespace Moneysystem
                 Console.WriteLine("5 - List all users and passwords");
                 Console.WriteLine("6 - Log out and return to the main menu");
                 Console.Write(">  ");
-                var input = Console.ReadLine();
-                switch (Convert.ToInt32(input))
+                // var input = Console.ReadLine();
+                switch (Console.ReadLine())
                 {
-                    case 1: // access user.salary
-                        //api.ViewSalary() alternativt api.GetUser();
-                        Console.Write("Salary: " + api.ViewSalary(currentUser.ID));
-                        // Console.WriteLine("Enter the ID of the user you want to get the salary from");
-                        // var salaryInput = Console.ReadLine();
-                        // int salaryInt = Convert.ToInt32(salaryInput);
-                        // string salary = api.ViewRole(salaryInt);
-                        // Console.WriteLine(salary);
+                    case "1": // access user.salary
+                        Console.WriteLine("Salary: " + api.ViewSalary(currentUser.ID));
                         Console.WriteLine("Press any key to proceed...");
                         Console.ReadLine();
                         break;
-                    case 2: // access user.role
-                        //api.ViewRole(); alternativt api.GetUser();
-                        Console.Write("Role: " + api.ViewRole(currentUser.ID));
-                        // Console.WriteLine("Enter the ID of the user you want to get the role from");
-                        // var roleInput = Console.ReadLine();
-                        // int roleInt = Convert.ToInt32(roleInput);
-                        // string role = api.ViewRole(roleInt);
-                        // Console.WriteLine(role);
+                    case "2": // access user.role
+                        Console.WriteLine("Role: " + api.ViewRole(currentUser.ID));
                         Console.WriteLine("Press any key to proceed...");
                         Console.ReadLine();
                         break;
-                    case 3: // create a user 
+                    case "3": // create a user 
                         //TODO: Denna metoden görs om sen med passwordchecks osv, gjorde den temporärt för att testa att den fungerar.
                         Console.WriteLine("Please enter a username:");
                         Console.Write("> ");
@@ -164,10 +175,11 @@ namespace Moneysystem
                         Console.WriteLine("\nPlease verify the password:");
                         Console.Write("> ");
                         string pwd2 = Console.ReadLine();
-                        Console.WriteLine("Please enter one of the avaiable roles for the user: ");
+                        Console.WriteLine("Please enter one of the avaiable roles for the user: \n");
                         foreach(var item in Utilities.Roles.ListOfRoles){
-                            Console.Write(item + " ");
+                            Console.WriteLine("\t" + item);
                         }
+                        Console.WriteLine();
                         string userrole = Console.ReadLine();
                         int usersalary = 0;
                         Console.WriteLine("Please enter a valid starting salary\n" +
@@ -187,11 +199,18 @@ namespace Moneysystem
                         Console.WriteLine("Returning to menu ...");
                         Console.ReadLine();
                         break;
-                    case 4: // remove an user
+                    case "4": // remove an user
                         bool remove = false;
                         Console.WriteLine("Enter the ID of the user you want to delete.");
-                        var removeInput = Console.ReadLine();
-                        int removeInt = Convert.ToInt32(removeInput);
+                        string removeInput = Console.ReadLine();
+                        int removeInt = 0;
+                        if(!Int32.TryParse(removeInput, out removeInt))
+                        {
+                            Console.WriteLine("Invalid input. Must be a number. "+
+                            "Press enter to return to menu");
+                            Console.ReadLine();
+                            break;
+                        }
                         remove = api.RemoveUserAdmin(currentUser.ID, removeInt);
                         if (remove)
                         {
@@ -204,9 +223,8 @@ namespace Moneysystem
                         Console.WriteLine("Press any key to proceed...");
                         Console.ReadLine();
                         break;
-                    case 5: // list all users and passwords
-                        List<Models.Account> list = new();
-                        list = api.ListAllUsers();
+                    case "5": // list all users and passwords
+                        List<Models.Account> list = api.ListAllUsers();
                         foreach (var user in list)
                         {
                             System.Console.WriteLine($"ID: {user.ID} Username: {user.Name} Password: {user.Password}");
@@ -214,7 +232,7 @@ namespace Moneysystem
                         Console.WriteLine("Press any key to proceed...");
                         Console.ReadLine();
                         break;
-                    case 6: // log out
+                    case "6": // log out
                         api.Logout(currentUser.ID);
                         exit = true;
                         break;

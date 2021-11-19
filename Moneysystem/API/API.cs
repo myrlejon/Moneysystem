@@ -180,6 +180,10 @@ namespace Moneysystem.API
 
                 if (user == null)
                 {
+                    if(salary == 0) 
+                    {
+                        salary = Roles.SetBasicSalary(role); // sets salary to the basic for the role
+                    }
                     db.Users.Add(new Models.Account
                     {
                         Name = username,
