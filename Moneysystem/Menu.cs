@@ -209,13 +209,20 @@ namespace Moneysystem
                         var userToRemove = api.GetUser(removeUser);
                         if(userToRemove is not null)
                         {
-                            if(api.RemoveUser(userToRemove.ID, removeUser, removePassword))
+                            if(userToRemove.password.Equals(removePassword))
                             {
-                                Console.WriteLine("You removed user " + removeUser);
+                                if(api.RemoveUserAdmin(currentUser.ID, userToRemove.ID))
+                                {
+                                    Console.WriteLine("You removed user " + removeUser);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("User " + removeUser + " was not removed");
+                                }
                             }
                             else
                             {
-                                Console.WriteLine("User " + removeUser + " was not removed");
+                                Console.WriteLine("Username and password did not match");
                             }
                         }
                         else

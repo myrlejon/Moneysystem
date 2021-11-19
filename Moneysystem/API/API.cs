@@ -154,7 +154,7 @@ namespace Moneysystem.API
                 var user = db.Users.FirstOrDefault(u => u.ID == ID);
                 var admin = db.Users.FirstOrDefault(u => u.ID == adminID);
 
-                if (user != null && user.ID != admin.ID)
+                if (user != null && user.ID != admin.ID && admin.ID != null)
                 {
                     userDelete = true;
                     db.Users.Remove(user);
