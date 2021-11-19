@@ -29,8 +29,7 @@ jobs:
           dotnet tool restore
       - name: Set up database
         run: |
-          cd Moneysystem
-          dotnet-ef database update
+          dotnet-ef database update -p \Moneysystem\
       #   dotnet-ef migrations add Moneysystem --project Moneysystem.csproj
           
       # - name: Update database
