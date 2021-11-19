@@ -78,19 +78,21 @@ namespace Moneysystem
                 switch (Convert.ToInt32(input))
                 {
                     case 1: // access user.salary
-                            //api.ViewSalary()
+                        Console.Write("Salary: " + api.ViewSalary(currentUser.ID));
+                        Console.ReadLine();
                         break;
                     case 2: // access user.role
-                            //api.ViewRole();
+                        Console.Write("Role: " + api.ViewRole(currentUser.ID));
+                        Console.ReadLine();
                         break;
                     case 3: // remove account and log out
-                            // api.RemoveUser
-                            // api.Logout(currentUser.Id);
-                            // currentUser = new User();
+                        api.RemoveUser(currentUser.ID, currentUser.Name, currentUser.Password);
+                        api.Logout(currentUser.ID);
+                        currentUser = new Models.Account();
                         exit = true;
                         break;
                     case 4: // log out
-                        //api.Logout    
+                        api.Logout(currentUser.ID); 
                         exit = true;
                         break;
                     default:
@@ -122,19 +124,34 @@ namespace Moneysystem
                 {
                     case 1: // access user.salary
                         //api.ViewSalary() alternativt api.GetUser();
+                        Console.WriteLine("Enter the ID of the user you want to get the salary from");
+                        var salaryInput = Console.ReadLine();
+                        int salaryInt = Convert.ToInt32(salaryInput);
+                        string salary = api.ViewRole(salaryInt);
+                        Console.WriteLine(salary);
+                        Console.WriteLine("Press any key to proceed...");
+                        Console.ReadLine();
                         break;
                     case 2: // access user.role
                         //api.ViewRole(); alternativt api.GetUser();
+                        Console.WriteLine("Enter the ID of the user you want to get the role from");
+                        var roleInput = Console.ReadLine();
+                        int roleInt = Convert.ToInt32(roleInput);
+                        string role = api.ViewRole(roleInt);
+                        Console.WriteLine(role);
+                        Console.WriteLine("Press any key to proceed...");
+                        Console.ReadLine();
                         break;
-                    case 3: // create a user
+                    case 3: // create a user 
+                        //TODO: Denna metoden görs om sen med passwordchecks osv, gjorde den temporärt för att testa att den fungerar.
                         //api.CreateUser();
                         break;
                     case 4: // remove an user
                         bool remove = false;
                         Console.WriteLine("Enter the ID of the user you want to delete.");
                         var removeInput = Console.ReadLine();
-                        int intInput = Convert.ToInt32(removeInput);
-                        remove = api.RemoveUserAdmin(currentUser.ID, intInput);
+                        int removeInt = Convert.ToInt32(removeInput);
+                        remove = api.RemoveUserAdmin(currentUser.ID, removeInt);
                         if (remove)
                         {
                             Console.WriteLine("Succesfully removed user.");
@@ -157,6 +174,7 @@ namespace Moneysystem
                         Console.ReadLine();
                         break;
                     case 6: // log out
+                        api.Logout(currentUser.ID);
                         exit = true;
                         break;
                     default:
