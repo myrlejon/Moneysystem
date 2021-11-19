@@ -180,12 +180,12 @@ namespace Moneysystem.API
 
                 if (user == null)
                 {
-                    db.Users.Add(new Models.User
+                    db.Users.Add(new Models.Account
                     {
                         Name = username,
                         Password = password,
                         Salary = salary,
-                        Role = role
+                        Role = role,
                     });
                     db.SaveChanges();
                     create = true;
