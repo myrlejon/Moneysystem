@@ -80,10 +80,12 @@ namespace Moneysystem
                 {
                     case 1: // access user.salary
                         Console.Write("Salary: " + api.ViewSalary(currentUser.ID));
+                        Console.WriteLine("Press any key to proceed...");
                         Console.ReadLine();
                         break;
                     case 2: // access user.role
                         Console.Write("Role: " + api.ViewRole(currentUser.ID));
+                        Console.WriteLine("Press any key to proceed...");
                         Console.ReadLine();
                         break;
                     case 3: // remove account and log out
