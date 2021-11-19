@@ -27,7 +27,8 @@ jobs:
           dotnet tool install --global dotnet-ef --version 5.0
           dotnet add package Microsoft.EntityFrameworkCore.Design --version 5.0
       - name: Set up database
-        run: |          
+        run: |
+          cd Moneysystem
           dotnet-ef migrations add Moneysystem
           dotnet-ef database update
       # - name: Update database
