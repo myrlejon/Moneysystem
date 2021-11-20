@@ -49,6 +49,11 @@ namespace TestSuite
                     bool result = api.Register(username, password, passwordVerify, role);
                     Assert.IsFalse(result);
                 }
+                else if(!PasswordChecker.CheckPassword(password)) // password is incorrect
+                {
+                    bool result = api.Register(username, password, passwordVerify, role);
+                    Assert.IsFalse(result);
+                }
                 else
                 {
                     bool result = api.Register(username, password, passwordVerify, role);

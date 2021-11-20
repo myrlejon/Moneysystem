@@ -37,5 +37,18 @@ namespace TestSuite
             api.RemoveUser(testUser.Name, testUser.Password);
             Assert.IsFalse(api.Login(testUser.Name, testUser.Password));
         }
+
+        [TestMethod]
+        public void AdminTest()
+        {
+            UnitTests unitTests = new();
+
+            api.Login("admin1", "admin1234");
+            bool actual = api.RemoveUser("admin1", "admin1234");
+            Assert.IsFalse(actual);
+            unitTests.TestRegisterUser("testUser123", "fail!123", "fail!123", "Minesweeper");
+            unitTests.TestRegisterUser("testUser123", "success1", "success1", "Executive");
+            unitTests.TestLogin("testUser123", "success1");
+        }
     }
 }
