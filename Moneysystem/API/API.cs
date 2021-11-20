@@ -21,190 +21,136 @@ namespace Moneysystem.API
             {
                 return create;
             }
-            using (var db = new Database.Database())
-            {
-                var user = db.Users.FirstOrDefault(u => u.Name == username);
-                if (user == null)
-                {
-                    db.Users.Add(new Models.User
-                    {
-                        Name = username,
-                        Password = password,
-                        Role = role,
-                        Salary = Roles.SetBasicSalary(role)
-                    });
-                    db.SaveChanges();
-                    create = true;
-                }
-                return create;
-            }
+            return create;
         }
         /// <summary>
         /// Logs in the user, adds 15 minutes to their sessiontimer.
         /// </summary>
-        public int Login(string username, string password)
+        public bool Login(string username, string password, List<Models.Account> accounts)
         {
-            int ID = 0;
-            using (var db = new Database.Database())
+            bool login = false;
+            foreach(var user in accounts)
             {
-                var user = db.Users.FirstOrDefault(u => u.Name == username);
-
-                if (user != null && username == user.Name && password == user.Password && user.IsActive)
+                if (user.Name == username && user.Password == password)
                 {
-                    user.SessionTimer = DateTime.Now;
-                    DateTime newTime = user.SessionTimer.AddMinutes(15);
-                    user.SessionTimer = newTime;
-                    ID = user.ID;
+                    login = true;
                 }
-                db.SaveChanges();
             }
-            return ID;
+            return login;
         }
 
-        public Models.Account GetUser(int ID)
+        public Models.Account GetUser(string username, string password, List<Models.Account> accounts)
         {
-            using (var db = new Database.Database())
+            Models.Account getUser = new();
+            foreach(var user in accounts)
             {
-                var user = db.Users.FirstOrDefault(u => u.ID == ID);
-                return user;
-            }
-        }
-
-        public Models.Account GetUser(string username)
-        {
-            using (var db = new Database.Database())
-            {
-                var user = db.Users.FirstOrDefault(u => u.Name == username);
-                return user;
-            }
-        }
-
-        /// <summary>
-        /// Logs out the user and resets their session timer.
-        /// </summary>
-        public bool Logout(int ID)
-        {
-            using (var db = new Database.Database())
-            {
-                bool logout = false;
-                var user = db.Users.FirstOrDefault(u => u.ID == ID);
-                if (user != null)
+                if (user.Name == username && user.Password == password)
                 {
-                    logout = true;
-                    user.SessionTimer = DateTime.Now;
+                    getUser = user;
                 }
-                db.SaveChanges();
-                return logout;
             }
+            return getUser;
         }
 
-        public int ViewSalary(int ID) // TODO: I User menyn, stoppa in användarens ID i metoden automatiskt, och för Admin menyn så får man söka på valfri ID.
+        // public Models.Account GetUser(string username)
+        // {
+            
+        // }
+
+
+        // public bool Logout(int ID)
+        // {
+            
+        // }
+
+        public int ViewSalary(int ID, List<Models.Account> accounts) 
         {
-            using (var db = new Database.Database())
+            int salary = 0;
+            foreach(var user in accounts)
             {
-                int salary = 0;
-                var user = db.Users.FirstOrDefault(u => u.ID == ID);
-                if (user != null)
+                if (ID == user.ID)
                 {
                     salary = user.Salary;
                 }
-                return salary;
             }
+            return salary;
         }
 
-        public string ViewRole(int ID)
+        public string ViewRole(int ID, List<Models.Account> accounts)
         {
-            using (var db = new Database.Database())
+            string role = "";
+            foreach(var user in accounts)
             {
-                string role = "";
-                var user = db.Users.FirstOrDefault(u => u.ID == ID);
-                if (user != null)
+                if (ID == user.ID)
                 {
                     role = user.Role;
                 }
-                return role;
             }
+            return role;
         }
 
-        public bool RemoveUser(int ID, string username, string password)
+        public int CreateID(List<Models.Account> accounts)
         {
-            using (var db = new Database.Database())
+            int highest = 0;
+            foreach(var user in accounts)
             {
-                bool userDelete = false;
-                var user = db.Users.FirstOrDefault(u => u.ID == ID);
-
-                if (user != null && user.Name == username && user.Password == password)
+                if(user.ID > highest)
                 {
-                    userDelete = true;
-                    db.Users.Remove(user);
-                    db.SaveChanges();
-                }
-                return userDelete;
-            }
-        }
-
-        /// <summary>
-        /// Admin kan inte ta bort sig själv.
-        /// </summary>
-        public bool RemoveUserAdmin(int adminID, int ID)
-        {
-            using (var db = new Database.Database())
-            {
-                bool userDelete = false;
-                var user = db.Users.FirstOrDefault(u => u.ID == ID);
-                var admin = db.Users.FirstOrDefault(u => u.ID == adminID);
-
-                if (user != null && user.ID != admin.ID)
-                {
-                    userDelete = true;
-                    db.Users.Remove(user);
-                    db.SaveChanges();
-                }
-                return userDelete;
-            }
-        }
-
-        public bool CreateUser(string username, string password, string passwordVerify, int salary, string role)
-        {
-            bool create = false;
-            if (!PasswordChecker.CheckPassword(password)
-                || !PasswordChecker.CheckPassword(passwordVerify)
-                || !password.Equals(passwordVerify)
-                || !Roles.ValidateRole(role))
-            {
-                return create;
-            }
-            using (var db = new Database.Database())
-            {
-                var user = db.Users.FirstOrDefault(u => u.Name == username);
-
-                if (user == null)
-                {
-                    db.Users.Add(new Models.Account
-                    {
-                        Name = username,
-                        Password = password,
-                        Salary = salary,
-                        Role = role,
-                    });
-                    db.SaveChanges();
-                    create = true;
-                }
-                return create;
-            }
-        }
-
-        public List<Models.Account> ListAllUsers()
-        {
-            List<Models.Account> users = new();
-            using (var db = new Database.Database())
-            {
-                foreach (Models.Account user in db.Users)
-                {
-                    users.Add(user);
+                    highest = user.ID;
                 }
             }
-            return users;
+            return highest + 1;
         }
+
+        // public bool RemoveUser(int ID, List<Models.Account> accounts)
+        // {
+        //     user
+
+        //     accounts.Remove();
+        //     bool userDelete = false;
+        // }
+
+        // public bool CreateUser(string username, string password, string passwordVerify, int salary, string role)
+        // {
+        //     bool create = false;
+        //     if (!PasswordChecker.CheckPassword(password)
+        //         || !PasswordChecker.CheckPassword(passwordVerify)
+        //         || !password.Equals(passwordVerify)
+        //         || !Roles.ValidateRole(role))
+        //     {
+        //         return create;
+        //     }
+        //     using (var db = new Database.Database())
+        //     {
+        //         var user = db.Users.FirstOrDefault(u => u.Name == username);
+
+        //         if (user == null)
+        //         {
+        //             db.Users.Add(new Models.Account
+        //             {
+        //                 Name = username,
+        //                 Password = password,
+        //                 Salary = salary,
+        //                 Role = role,
+        //             });
+        //             db.SaveChanges();
+        //             create = true;
+        //         }
+        //         return create;
+        //     }
+        // }
+
+        // public List<Models.Account> ListAllUsers()
+        // {
+        //     List<Models.Account> users = new();
+        //     using (var db = new Database.Database())
+        //     {
+        //         foreach (Models.Account user in db.Users)
+        //         {
+        //             users.Add(user);
+        //         }
+        //     }
+        //     return users;
+        // }
     }
 }

@@ -70,6 +70,39 @@ namespace Moneysystem.Utilities
             return result;
         }
 
+        public static bool SetIsAdmin(string role)
+        {
+            bool result = false;
+            if (ValidateRole(role))
+            {
+                switch (role)
+                {
+                    case "Executive":
+                        result = true;
+                        break;
+                    case "Manager":
+                        result = true;
+                        break;
+                    case "Operations":
+                        result = true;
+                        break;
+                    case "Production":
+                        result = true;
+                        break;
+                    case "Administrator":
+                        result = true;
+                        break;
+                    case "User":
+                        result = false;
+                        break;
+                    case "Minesweeper":
+                        result = false;
+                        break;
+                }
+            }
+            return result;
+        }
+
 
     }
 }
