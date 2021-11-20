@@ -136,19 +136,6 @@ namespace Moneysystem.API
             return role;
         }
 
-        public int CreateID(List<Models.Account> accounts)
-        {
-            int highest = 0;
-            foreach(var user in accounts)
-            {
-                if(user.ID > highest)
-                {
-                    highest = user.ID;
-                }
-            }
-            return highest + 1;
-        }
-
         public bool RemoveUser(string username, string password)
         {
             foreach(var item in Accounts)
