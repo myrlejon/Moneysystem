@@ -107,7 +107,7 @@ namespace Moneysystem.API
                     return item;
                 }
             }
-            return new Models.Account();           
+            return null;           
         }
 
         public int ViewSalary(int ID) 
