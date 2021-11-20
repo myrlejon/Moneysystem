@@ -2,34 +2,81 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Moneysystem.Utilities;
+using Moneysystem.Models;
 
 namespace Moneysystem.API
 {
     public class API
     {
+        public List<Account> accounts = new();
+        public int idCounter = 3;
+        public List<Account> Accounts { get{return accounts;} set{accounts = value;}}
+
+        public API()
+        {
+            accounts.Add(new Admin{
+                ID = 1,
+                Name="admin1",
+                Password="admin1234",
+                IsAdmin = true,
+                Role = "Administrator",
+                Salary = Roles.SetBasicSalary("Administrator")
+                });
+            accounts.Add(new User{
+                ID = 2,
+                Name="user1",
+                Password="user1234",
+                IsAdmin = false,
+                Role = "User",
+                Salary = Roles.SetBasicSalary("User")
+                });
+            
+        }
         /// <summary>
         /// Registers a new user if username isn't not taken.
         /// </summary>
         public bool Register(string username, string password, string passwordVerify,
-        string role) // TODO: Lägga till obligatorisk salary och role vid registrering?
+        string role, int salary = 0) 
         {
-            bool create = false;
             if (!PasswordChecker.CheckPassword(password)
                 || !PasswordChecker.CheckPassword(passwordVerify)
+                || !UsernameChecker.CheckUsername(username)
                 || !password.Equals(passwordVerify)
                 || !Roles.ValidateRole(role))
             {
-                return create;
+                return false;
             }
-            return create;
+            foreach(var item in Accounts)
+            {
+                if(item.Name.Equals(username))
+                {
+                    return false;
+                }
+            }
+            if(salary == 0)
+            {
+                salary = Roles.SetBasicSalary(role);
+            }
+            Accounts.Add(new User{
+                ID = this.idCounter++,
+                Name = username,
+                Password = password,
+                Salary = salary,
+                Role = role
+            });
+            return true;
         }
         /// <summary>
         /// Logs in the user, adds 15 minutes to their sessiontimer.
         /// </summary>
-        public bool Login(string username, string password, List<Models.Account> accounts)
+        public bool Login(string username, string password)
         {
             bool login = false;
-            foreach(var user in accounts)
+            if(username.Length < 3 || password.Length < 2)
+            {
+                return login;
+            }
+            foreach(var user in Accounts)
             {
                 if (user.Name == username && user.Password == password)
                 {
@@ -39,34 +86,34 @@ namespace Moneysystem.API
             return login;
         }
 
-        public Models.Account GetUser(string username, string password, List<Models.Account> accounts)
+        public Account GetUser(string username, string password)
         {
-            Models.Account getUser = new();
-            foreach(var user in accounts)
+            Account getUser = new();
+            foreach(var user in Accounts)
             {
                 if (user.Name == username && user.Password == password)
                 {
-                    getUser = user;
+                    return user;
                 }
             }
-            return getUser;
+            return null;
         }
 
-        // public Models.Account GetUser(string username)
-        // {
-            
-        // }
+        public Models.Account GetUser(int id)
+        {
+            foreach(var item in Accounts){
+                if (id == item.ID)
+                {
+                    return item;
+                }
+            }
+            return new Models.Account();           
+        }
 
-
-        // public bool Logout(int ID)
-        // {
-            
-        // }
-
-        public int ViewSalary(int ID, List<Models.Account> accounts) 
+        public int ViewSalary(int ID) 
         {
             int salary = 0;
-            foreach(var user in accounts)
+            foreach(var user in Accounts)
             {
                 if (ID == user.ID)
                 {
@@ -76,10 +123,10 @@ namespace Moneysystem.API
             return salary;
         }
 
-        public string ViewRole(int ID, List<Models.Account> accounts)
+        public string ViewRole(int ID)
         {
             string role = "";
-            foreach(var user in accounts)
+            foreach(var user in Accounts)
             {
                 if (ID == user.ID)
                 {
@@ -102,55 +149,22 @@ namespace Moneysystem.API
             return highest + 1;
         }
 
-        // public bool RemoveUser(int ID, List<Models.Account> accounts)
-        // {
-        //     user
+        public bool RemoveUser(string username, string password)
+        {
+            foreach(var item in Accounts)
+            {
+                if(item.Name.Equals(username) && item.Password.Equals(password) && item.IsAdmin == false)
+                {
+                    Accounts.Remove(item);
+                    return true;
+                }
+            }
+            return false;
+        }
 
-        //     accounts.Remove();
-        //     bool userDelete = false;
-        // }
-
-        // public bool CreateUser(string username, string password, string passwordVerify, int salary, string role)
-        // {
-        //     bool create = false;
-        //     if (!PasswordChecker.CheckPassword(password)
-        //         || !PasswordChecker.CheckPassword(passwordVerify)
-        //         || !password.Equals(passwordVerify)
-        //         || !Roles.ValidateRole(role))
-        //     {
-        //         return create;
-        //     }
-        //     using (var db = new Database.Database())
-        //     {
-        //         var user = db.Users.FirstOrDefault(u => u.Name == username);
-
-        //         if (user == null)
-        //         {
-        //             db.Users.Add(new Models.Account
-        //             {
-        //                 Name = username,
-        //                 Password = password,
-        //                 Salary = salary,
-        //                 Role = role,
-        //             });
-        //             db.SaveChanges();
-        //             create = true;
-        //         }
-        //         return create;
-        //     }
-        // }
-
-        // public List<Models.Account> ListAllUsers()
-        // {
-        //     List<Models.Account> users = new();
-        //     using (var db = new Database.Database())
-        //     {
-        //         foreach (Models.Account user in db.Users)
-        //         {
-        //             users.Add(user);
-        //         }
-        //     }
-        //     return users;
-        // }
+        public List<Account> ListAllUsers()
+        {
+            return Accounts;
+        }
     }
 }

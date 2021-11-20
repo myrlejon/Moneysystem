@@ -1,7 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moneysystem.API;
-using Moneysystem.Database;
 using Moneysystem.Utilities;
+using Moneysystem.Models;
 using System;
 using System.Text.RegularExpressions;
 
@@ -15,7 +15,7 @@ namespace TestSuite
         [TestInitialize]
         public void TestInit()
         {
-            Seeder.Seed();
+            API api = new API();
         }
 
         [DataRow("")] // should fail
@@ -37,33 +37,37 @@ namespace TestSuite
         }
 
         [DataRow("admin1", "admin1234", "admin1234", "Administrator")] // should fail, existing user
-        [DataRow("snurreSprätt", "daffyDuck23", "daffyDuck23", "Minesweeper")] // should pass
-        [DataRow("grayWolf", "roadRunner23", "roadRunner25", "Production")] // should fail
+        [DataRow("gurra231234", "daffyDuck23", "daffyDuck23", "Minesweeper")] // should pass
+        [DataRow("grayWolf1", "roadRunner23", "roadRunner25", "Production")] // should fail
         [DataTestMethod]
         public void TestRegisterUser(string username, string password, string passwordVerify, string role)
         {
-            if (api.GetUser(username) is not null) // username already exists
+            if(api.GetUser(username, password) is null)
+            {
+                if (!password.Equals(passwordVerify)) // if passwords dont match
+                {
+                    bool result = api.Register(username, password, passwordVerify, role);
+                    Assert.IsFalse(result);
+                }
+                else
+                {
+                    bool result = api.Register(username, password, passwordVerify, role);
+                    Assert.IsTrue(result);
+                }
+
+            }
+            else // user already exists
             {
                 bool result = api.Register(username, password, passwordVerify, role);
                 Assert.IsFalse(result);
-            }
-            else if (!password.Equals(passwordVerify)) // if passwords dont match
-            {
-                bool result = api.Register(username, password, passwordVerify, role);
-                Assert.IsFalse(result);
-            }
-            else
-            {
-                bool result = api.Register(username, password, passwordVerify, role);
-                Assert.IsTrue(result);
             }
         }
         [DataRow("admin1", "admin1234")]
         [DataTestMethod]
         public void TestLogin(string username, string password)
         {
-            int expected = api.Login(username, password);
-            Assert.IsTrue(1 == expected);
+            bool expected = api.Login(username, password);
+            Assert.IsTrue(expected);
         }
         [DataRow(1)]
         [DataTestMethod]
@@ -71,19 +75,13 @@ namespace TestSuite
         {
             Assert.IsNotNull(api.GetUser(id));
         }
-        [DataRow("admin1")]
+        [DataRow("admin1", "admin1234")]
         [DataTestMethod]
-        public void TestGetUserByName(string username)
+        public void TestGetUserByName(string username, string password)
         {
-            Assert.IsNotNull(api.GetUser(username));
+            Assert.IsNotNull(api.GetUser(username, password));
         }
-        [DataRow(1)]
-        [DataTestMethod]
-        public void TestLogout(int userID)
-        {
-            api.Login("admin1", "admin1234");
-            Assert.IsTrue(api.Logout(userID));
-        }
+
 
         [TestMethod]
         public void TestViewSalary()
@@ -100,8 +98,9 @@ namespace TestSuite
         [TestMethod]
         public void TestRemoveUser()
         {
-            var user = api.GetUser("snurreSprätt");
-            Assert.IsTrue(api.RemoveUser(user.ID, user.Name, user.Password));
+            api.Register("snurreSprätt2", "daffyDuck23", "daffyDuck23", "Minesweeper", 10);
+            var user = api.GetUser("snurreSprätt2", "daffyDuck23");
+            Assert.IsTrue(api.RemoveUser(user.Name, user.Password));
         }
         [TestMethod]
         public void TestListAllUsers()
@@ -112,16 +111,7 @@ namespace TestSuite
         [TestMethod]
         public void TestCreateUser()
         {
-            Assert.IsTrue(api.CreateUser("snurre2", "snurreBurre5", "snurreBurre5", 10, "Minesweeper"));
-        }
-
-        [TestMethod]
-        public void TestRemoveUserAdmin()
-        {
-            int adminId = api.Login("admin1", "admin1234");
-            var user = api.GetUser("snurre2");
-            Assert.IsTrue(api.RemoveUserAdmin(adminId, user.ID));
-
+            Assert.IsTrue(api.Register("snurre2", "snurreBurre5", "snurreBurre5", "Minesweeper",10));
         }
     }
 }

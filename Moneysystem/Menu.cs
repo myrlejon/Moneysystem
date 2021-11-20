@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Moneysystem.Utilities;
+
 namespace Moneysystem
 {
     public static class Menu
@@ -21,7 +22,6 @@ namespace Moneysystem
                 Console.WriteLine("1 - Log in as an User or Admin");
                 Console.WriteLine("2 - Exit the program");
                 Console.Write(">  ");
-                // var input = Console.ReadLine();
 
                 switch (Console.ReadLine())
                 {
@@ -31,16 +31,20 @@ namespace Moneysystem
                         Console.WriteLine("Password: ");
                         var passInput = Console.ReadLine();
 
-                        currentUser = api.GetUser(api.Login(userInput, passInput));
-
-                        if (currentUser is null)
+                        if(string.IsNullOrEmpty(userInput) 
+                        || string.IsNullOrEmpty(passInput)
+                        || !api.Login(userInput,passInput))
                         {
                             Console.WriteLine("Wrong input.");
-                            break;
                         }
                         else
                         {
-                            if (currentUser.IsAdmin)
+                            currentUser = api.GetUser(userInput,passInput);
+                            if(currentUser is null)
+                            {
+                                Console.WriteLine("Wrong input");
+                            }
+                            else if (currentUser.IsAdmin)
                             {
                                 AdminMenu();
                             }
@@ -98,11 +102,11 @@ namespace Moneysystem
                         Console.WriteLine("Password: ");
                         Console.Write("> ");
                         string inputPwd = Console.ReadLine();
+                        
                         if(currentUser.Name.Equals(inputName) &&
                             inputPwd.Equals(currentUser.Password))
                         {
-                            api.RemoveUser(currentUser.ID, currentUser.Name, currentUser.Password);
-                            api.Logout(currentUser.ID);
+                            api.RemoveUser(currentUser.Name, currentUser.Password);
                             currentUser = new ();
                             exit = true;
                             Console.WriteLine("You have removed your account, and are also logged out.");
@@ -115,7 +119,6 @@ namespace Moneysystem
                         
                         break;
                     case "4": // log out
-                        api.Logout(currentUser.ID); 
                         currentUser = new();
                         Console.WriteLine("You have logged out.");
                         Console.ReadLine();
@@ -188,7 +191,7 @@ namespace Moneysystem
                         string salaryString = Console.ReadLine();
                         Int32.TryParse(salaryString, out usersalary);
                         Console.WriteLine("Attempting to create user " + username);
-                        if (api.CreateUser(username, pwd1, pwd2, userrole, usersalary))
+                        if (api.GetUser(username, pwd1) is not null && api.Register(username, pwd1, pwd2, userrole, usersalary))
                         {
                             Console.WriteLine(username + " was created!");
                         }
@@ -207,12 +210,12 @@ namespace Moneysystem
                         Console.WriteLine("\nPlease enther the password of the user to remove: ");
                         Console.Write("> ");
                         string removePassword = Console.ReadLine();
-                        var userToRemove = api.GetUser(removeUser);
+                        var userToRemove = api.GetUser(removeUser, removePassword);
                         if(userToRemove is not null)
                         {
-                            if(userToRemove.password.Equals(removePassword))
+                            if(userToRemove.Password.Equals(removePassword))
                             {
-                                if(api.RemoveUserAdmin(currentUser.ID, userToRemove.ID))
+                                if(api.RemoveUser(userToRemove.Name, userToRemove.Password))
                                 {
                                     Console.WriteLine("You removed user " + removeUser);
                                 }
@@ -243,7 +246,7 @@ namespace Moneysystem
                         Console.ReadLine();
                         break;
                     case "6": // log out
-                        api.Logout(currentUser.ID);
+                        currentUser = new();
                         exit = true;
                         break;
                     default:
