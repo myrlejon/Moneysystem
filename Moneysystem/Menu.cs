@@ -1,20 +1,13 @@
+
 using System;
 using System.Collections.Generic;
+using Moneysystem.Utilities;
 namespace Moneysystem
 {
     public static class Menu
     {
         static Models.Account currentUser = new();
         static API.API api = new();
-
-        static List<Models.Account> accounts = new List<Models.Account>
-        {
-            new Models.Admin {ID = 1, Name = "admin1", Password = "admin1234", IsAdmin = true , Salary = 500, Role = "Administrator"},
-            new Models.User {ID = 2, Name = "user1", Password = "user1234", IsAdmin = false , Salary = 100, Role = "User"},
-        };
-
-        static List<string> roles = new List<string>() {"Minesweeper", "User", "Administrator", "Production", "Operations", "Manager", "Executive"};
-
         /// <summary>
         /// Creates a basic main menu that lets the user log in, or exit the program.
         /// </summary>
@@ -28,19 +21,19 @@ namespace Moneysystem
                 Console.WriteLine("1 - Log in as an User or Admin");
                 Console.WriteLine("2 - Exit the program");
                 Console.Write(">  ");
-                var input = Console.ReadLine();
+                // var input = Console.ReadLine();
 
-                switch (Convert.ToInt32(input))
+                switch (Console.ReadLine())
                 {
-                    case 1: // Login
+                    case "1": // Login
                         Console.WriteLine("Username: ");
                         var userInput = Console.ReadLine();
                         Console.WriteLine("Password: ");
                         var passInput = Console.ReadLine();
 
-                        currentUser = api.GetUser(userInput, passInput, accounts);
+                        currentUser = api.GetUser(api.Login(userInput, passInput));
 
-                        if (currentUser is null || api.Login(userInput, passInput, accounts) == false)
+                        if (currentUser is null)
                         {
                             Console.WriteLine("Wrong input.");
                             break;
@@ -57,11 +50,12 @@ namespace Moneysystem
                             }
                         }
                         break;
-                    case 2: // Exit program
+                    case "2": // Exit program
                         exit = true;
                         break;
                     default:
-                        Console.WriteLine("Invalid input. Please try again.");
+                        Console.WriteLine("Invalid input. Please press enter to try again.");
+                        Console.ReadLine();
                         break;
                 }
             }
@@ -83,39 +77,53 @@ namespace Moneysystem
                 Console.WriteLine("3 - Remove your user account");
                 Console.WriteLine("4 - Log out and return to the main menu");
                 Console.Write(">  ");
-                var input = Console.ReadLine();
-                switch (Convert.ToInt32(input))
+
+                switch (Console.ReadLine())
                 {
-                    case 1: // access user.salary
-                        Console.Write("Salary: " + api.ViewSalary(currentUser.ID, accounts));
+                    case "1": // access user.salary
+                        Console.WriteLine("Salary: " + api.ViewSalary(currentUser.ID));
+                        Console.WriteLine("Press any key to proceed...");
                         Console.ReadLine();
                         break;
-                    case 2: // access user.role
-                        Console.Write("Role: " + api.ViewRole(currentUser.ID, accounts));
+                    case "2": // access user.role
+                        Console.WriteLine("Role: " + api.ViewRole(currentUser.ID));
+                        Console.WriteLine("Press any key to proceed...");
                         Console.ReadLine();
                         break;
-                    case 3: // remove account and log out
+                    case "3": // remove account and log out
+                        Console.WriteLine("To remove your account, please enter your username and your password.");
                         Console.WriteLine("Username: ");
-                        var removeUserInput = Console.ReadLine();
+                        Console.Write("> ");
+                        string inputName = Console.ReadLine();
                         Console.WriteLine("Password: ");
-                        var removePassInput = Console.ReadLine();
-                        if (removeUserInput == currentUser.Name && removePassInput == currentUser.Password)
+                        Console.Write("> ");
+                        string inputPwd = Console.ReadLine();
+                        if(currentUser.Name.Equals(inputName) &&
+                            inputPwd.Equals(currentUser.Password))
                         {
-                            accounts.Remove(currentUser);
-                            Console.WriteLine($"{removeUserInput} has been removed.");
-                            currentUser = new Models.Account();
+                            api.RemoveUser(currentUser.ID, currentUser.Name, currentUser.Password);
+                            api.Logout(currentUser.ID);
+                            currentUser = new ();
+                            exit = true;
+                            Console.WriteLine("You have removed your account, and are also logged out.");
                         }
                         else
                         {
-                            Console.WriteLine("Error removing user.");
+                            Console.WriteLine("Incorrect username and/or password. Returning to menu");
                         }
-                        exit = true;
+                        Console.ReadLine();
+                        
                         break;
-                    case 4: // log out
+                    case "4": // log out
+                        api.Logout(currentUser.ID); 
+                        currentUser = new();
+                        Console.WriteLine("You have logged out.");
+                        Console.ReadLine();
                         exit = true;
                         break;
                     default:
-                        Console.WriteLine("Invalid input. Please try again.");
+                        Console.WriteLine("Invalid input. Press enter to try again.");
+                        Console.ReadLine();
                         break;
                 }
             }
@@ -138,84 +146,104 @@ namespace Moneysystem
                 Console.WriteLine("5 - List all users and passwords");
                 Console.WriteLine("6 - Log out and return to the main menu");
                 Console.Write(">  ");
-                var input = Console.ReadLine();
-                switch (Convert.ToInt32(input))
+                // var input = Console.ReadLine();
+                switch (Console.ReadLine())
                 {
-                    case 1: // access user.salary
-                        Console.Write("Salary: " + api.ViewSalary(currentUser.ID, accounts));
+                    case "1": // access user.salary
+                        Console.WriteLine("Salary: " + api.ViewSalary(currentUser.ID));
+                        Console.WriteLine("Press any key to proceed...");
                         Console.ReadLine();
                         break;
-                    case 2: // access user.role
-                        Console.Write("Role: " + api.ViewRole(currentUser.ID, accounts));
+                    case "2": // access user.role
+                        Console.WriteLine("Role: " + api.ViewRole(currentUser.ID));
+                        Console.WriteLine("Press any key to proceed...");
                         Console.ReadLine();
                         break;
-                    case 3: // create a user 
-                        Console.Write("(Both username and password needs to have atleast one number and letter in them)\nUsername: ");
-                        var createNameInput = Console.ReadLine();
-                        Console.Write("Password: ");
-                        var createPassInput = Console.ReadLine();
-                        bool checkUsername = Utilities.PasswordChecker.CheckPassword(createNameInput);
-                        bool checkPassword = Utilities.PasswordChecker.CheckPassword(createPassInput);
-
-                        for (int i = 0; i < roles.Count; i++)
+                    case "3": // create a user 
+                        Console.WriteLine("Please enter a username:");
+                        Console.Write("> ");
+                        string username = Console.ReadLine();
+                        if(string.IsNullOrEmpty(username) || username.Length < 3)
                         {
-                            Console.WriteLine($"({i}) {roles[i]}");
+                            Console.WriteLine("\nPlease enter a username with at least 3 characters"+
+                            " containing at least 1 letter and 1 number");
+                            Console.ReadLine();
+                            break;
                         }
-
-                        Console.WriteLine("Enter the number of the role: ");
-                        var createRoleInput = Console.ReadLine();
-                        int createRoleInputInt = Convert.ToInt32(createRoleInput);
-                        int createSalary = Utilities.Roles.SetBasicSalary(roles[createRoleInputInt]);
-                        int createId = api.CreateID(accounts);
-                        bool createAdmin = Utilities.Roles.SetIsAdmin(roles[createRoleInputInt]);
-
-                        //Skapar user om rollen stämmer överrens
-                        if (checkUsername && checkPassword && createAdmin == false)
-                        {
-                            var newUser = new Models.User() {ID = createId, Name = createNameInput, Password = createPassInput, IsAdmin = createAdmin, Salary = createSalary, Role = roles[createRoleInputInt]};
-                            accounts.Add(newUser);
-                            Console.WriteLine("Successfully created a new user.");
+                        Console.WriteLine("Please enter a password:");
+                        Console.Write("> ");
+                        string pwd1 = Console.ReadLine();
+                        Console.WriteLine("\nPlease verify the password:");
+                        Console.Write("> ");
+                        string pwd2 = Console.ReadLine();
+                        Console.WriteLine("Please enter one of the avaiable roles for the user: \n");
+                        foreach(var item in Utilities.Roles.ListOfRoles){
+                            Console.WriteLine("\t" + item);
                         }
-                        //Skapar admin om rollen stämmer överrens
-                        else if (checkUsername && checkPassword && createAdmin)
+                        Console.WriteLine();
+                        string userrole = Console.ReadLine();
+                        int usersalary = 0;
+                        Console.WriteLine("Please enter a valid starting salary\n" +
+                        "(or just press enter for basic salary for that role)");
+                        string salaryString = Console.ReadLine();
+                        Int32.TryParse(salaryString, out usersalary);
+                        Console.WriteLine("Attempting to create user " + username);
+                        if (api.CreateUser(username, pwd1, pwd2, userrole, usersalary))
                         {
-                            var newUser = new Models.Admin() {ID = createId, Name = createNameInput, Password = createPassInput, IsAdmin = createAdmin, Salary = createSalary, Role = roles[createRoleInputInt]};
-                            accounts.Add(newUser);
-                            Console.WriteLine("Successfully created a new user.");
+                            Console.WriteLine(username + " was created!");
                         }
                         else
                         {
-                            Console.WriteLine("Error creating user.");
+                            Console.WriteLine("Sorry. Something went wrong. " +
+                             username + " was not created");
                         }
-
+                        Console.WriteLine("Returning to menu ...");
+                        Console.ReadLine();
                         break;
-                    case 4: // remove an user //TODO: gör om metod
-                        bool remove = false;
-                        Console.WriteLine("Enter the ID of the user you want to delete.");
-                        var removeInput = Console.ReadLine();
-                        int removeInt = Convert.ToInt32(removeInput);
-                        
-
-                        if (removeInt != 1) 
+                    case "4": // remove an user
+                        Console.WriteLine("Please enter the username of the user to remove: ");
+                        Console.Write("> ");
+                        string removeUser = Console.ReadLine();
+                        Console.WriteLine("\nPlease enther the password of the user to remove: ");
+                        Console.Write("> ");
+                        string removePassword = Console.ReadLine();
+                        var userToRemove = api.GetUser(removeUser);
+                        if(userToRemove is not null)
                         {
-                            Console.WriteLine("Succesfully removed user.");
+                            if(userToRemove.password.Equals(removePassword))
+                            {
+                                if(api.RemoveUserAdmin(currentUser.ID, userToRemove.ID))
+                                {
+                                    Console.WriteLine("You removed user " + removeUser);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("User " + removeUser + " was not removed");
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine("Username and password did not match");
+                            }
                         }
                         else
                         {
-                            Console.WriteLine("Failed to remove user.");
+                            Console.WriteLine(removeUser + " was an incorrect username. Please try again");
                         }
                         Console.WriteLine("Press any key to proceed...");
                         Console.ReadLine();
                         break;
-                    case 5: // list all users and passwords
-                        foreach (var user in accounts)
+                    case "5": // list all users and passwords
+                        List<Models.Account> list = api.ListAllUsers();
+                        foreach (var user in list)
                         {
-                            Console.WriteLine($"ID: {user.ID} Username: {user.Name} Password: {user.Password}");
+                            System.Console.WriteLine($"ID: {user.ID} Username: {user.Name} Password: {user.Password}");
                         }
                         Console.WriteLine("Press any key to proceed...");
                         Console.ReadLine();
                         break;
-                    case 6: // log out
+                    case "6": // log out
+                        api.Logout(currentUser.ID);
                         exit = true;
                         break;
                     default:
